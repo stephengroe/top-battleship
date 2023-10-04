@@ -23,4 +23,7 @@ module.exports = {
   },
   rules: {
   },
+  plugins: {
+    "plugins": ["jest"]
+  }
 };
