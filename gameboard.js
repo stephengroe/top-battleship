@@ -2,6 +2,7 @@ import Ship from "./ship";
 
 export default class Gameboard {
   constructor(dimensions) {
+    this.dimensions = dimensions;
     this.board = this.generateBoard(dimensions);
     this.ships = [];
   }
@@ -26,15 +27,20 @@ export default class Gameboard {
   }
 
   placeShip([x, y], shipLength, horizontal) {
+    // Check if out of bounds
+    if ((horizontal && x + shipLength > this.dimensions)
+      || (!horizontal && y + shipLength > this.dimensions)) {
+      throw new Error("Out of bounds");
+    }
 
     // Place horizontal ship
     if (horizontal) {
-      for (let i=y; i<(y + shipLength); i += 1){
-        this.board[x][i].hasShip = true;
-      }
-    } else { // Place vertical ship
       for (let i=x; i<(x + shipLength); i += 1){
         this.board[i][y].hasShip = true;
+      }
+    } else { // Place vertical ship
+      for (let i=y; i<(y + shipLength); i += 1){
+        this.board[x][i].hasShip = true;
       }
     }
 
