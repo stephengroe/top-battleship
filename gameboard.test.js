@@ -42,7 +42,7 @@ describe('Gameboard places ships', () => {
     expect(gameboard.board[6][5].hasShip).toBe(false);
   });
   
-  test.skip('Gameboard places vertical ship', () => {
+  test('Gameboard places vertical ship', () => {
     gameboard.placeShip([3, 5], 3, false);
     expect(gameboard.board[3][4].hasShip).toBe(false);
     expect(gameboard.board[3][5].hasShip).toBe(true);
@@ -63,13 +63,42 @@ describe('Gameboard places ships', () => {
     }).toThrow("Out of bounds");
   });
 
-  test.todo('Gameboard disallows overlapping ships');
+  test('Gameboard disallows overlapping ships', () => {
+    gameboard.placeShip([4, 6], 3, true);
+    expect(() => {
+      gameboard.placeShip([5, 5], 3, false);
+    }).toThrow("Overlapping ships");
+  });
 
   test('Gameboard adds ship objects', () => {
     gameboard.placeShip([2, 5], 3, true);
     gameboard.placeShip([6, 3], 2, false);
     expect(gameboard.ships).toHaveLength(2);
   });
+});
 
+describe('Gameboard receives attacks', () => {
+  beforeEach(() => {
+    gameboard.placeShip([3, 5], 3, true);
+  });
 
+  test('Gameboard receives hit', () => {
+    expect(gameboard.receiveAttack([3, 5])).toEqual([true, false]);
+  });
+
+  test('Gameboard receives miss', () => {
+    expect(gameboard.receiveAttack([3, 4])).toEqual([false, false]);
+  });
+
+  test('Gameboard receives hit and sunk', () => {
+    gameboard.receiveAttack([4, 5])
+    expect(gameboard.receiveAttack([5, 5])).toEqual([true, true]);
+  });
+
+  test('Gameboard rejects duplicate attack', () => {
+    gameboard.receiveAttack([3, 5])
+    expect(() => {
+      gameboard.receiveAttack([3, 5])
+    }).toThrow("Duplicate attack");
+  });
 });
