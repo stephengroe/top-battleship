@@ -29,13 +29,13 @@ export default class Gameboard {
 
     // Place horizontal ship
     if (horizontal) {
-
-      for (let i=x; i<(x + shipLength); i += 1){
+      for (let i=y; i<(y + shipLength); i += 1){
         this.board[x][i].hasShip = true;
       }
-
     } else { // Place vertical ship
-
+      for (let i=x; i<(x + shipLength); i += 1){
+        this.board[i][y].hasShip = true;
+      }
     }
 
   }
