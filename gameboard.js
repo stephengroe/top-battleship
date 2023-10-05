@@ -9,22 +9,36 @@ export default class Gameboard {
   generateBoard(dimensions) {
     const board = [];
 
-    // Create array of rows
+    // Create array of columns
     for (let i=0; i<dimensions; i+=1) {
-      const row = [];
+      const column = [];
 
-      // In each row, create array of cells
+      // In each column, create array of cells
       for (let j=0; j<dimensions; j+=1) {
         const cell = new Cell(i, j);
-        row.push(cell);
+        column.push(cell);
       }
 
-      board.push(row);
+      board.push(column);
     }
 
     return board;
   }
 
+  placeShip([x, y], shipLength, horizontal) {
+
+    // Place horizontal ship
+    if (horizontal) {
+
+      for (let i=x; i<(x + shipLength); i += 1){
+        this.board[x][i].hasShip = true;
+      }
+
+    } else { // Place vertical ship
+
+    }
+
+  }
 }
 
 class Cell {
