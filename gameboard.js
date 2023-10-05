@@ -3,6 +3,7 @@ import Ship from "./ship";
 export default class Gameboard {
   constructor(dimensions) {
     this.board = this.generateBoard(dimensions);
+    this.ships = [];
   }
 
   generateBoard(dimensions) {
@@ -23,12 +24,13 @@ export default class Gameboard {
 
     return board;
   }
+
 }
 
 class Cell {
   constructor(x, y) {
-    this.position = [x, y];
-    this.isEmpty = true;
+    this.coordinates = [x, y];
+    this.hasShip = false;
     this.beenHit = false;
   }
 }
