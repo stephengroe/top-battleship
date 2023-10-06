@@ -33,6 +33,8 @@ export default class Gameboard {
       throw new Error("Out of bounds");
     }
 
+    const id = this.board.length += 1;
+
     // Place horizontal ship
     if (horizontal) {
       for (let i=x; i<(x + shipLength); i += 1){
@@ -40,6 +42,7 @@ export default class Gameboard {
           throw new Error("Overlapping ships");
         } else {
           this.board[i][y].hasShip = true;
+          this.board[i][y].shipId = id;
         }
       }
     } else { // Place vertical ship
@@ -48,12 +51,40 @@ export default class Gameboard {
           throw new Error("Overlapping ships");
         } else {
           this.board[x][i].hasShip = true;
+          this.board[x][i].shipId = id;
         }
       }
     }
 
     // Add ship objects
-    this.ships.push(new Ship(shipLength));
+    this.ships.push(new Ship(id, shipLength));
+  }
+
+  receiveAttack([x, y]) {
+
+    const attackedCell = this.board[x][y];
+    let hit = false;
+    let sunk = false;
+
+    // If already attacked, reject
+    if (attackedCell.beenAttacked) {
+      throw new Error("Duplicate attack");
+    } else {
+      attackedCell.beenAttacked = true;
+    }
+    
+    // If ship, flag a hit
+    if (attackedCell.hasShip) {
+      hit = true;
+      const hitShip = this.ships.find(ship => ship.id === attackedCell.shipId);
+      hitShip.hit();
+
+      if (hitShip.isSunk === true) {
+        sunk = true;
+      }
+    }
+
+    return [hit, sunk];
   }
 }
 
@@ -61,6 +92,6 @@ class Cell {
   constructor(x, y) {
     this.coordinates = [x, y];
     this.hasShip = false;
-    this.beenHit = false;
+    this.beenAttacked = false;
   }
 }

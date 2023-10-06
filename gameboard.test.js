@@ -91,7 +91,8 @@ describe('Gameboard receives attacks', () => {
   });
 
   test('Gameboard receives hit and sunk', () => {
-    gameboard.receiveAttack([4, 5])
+    gameboard.receiveAttack([3, 5]);
+    gameboard.receiveAttack([4, 5]);
     expect(gameboard.receiveAttack([5, 5])).toEqual([true, true]);
   });
 
@@ -100,5 +101,36 @@ describe('Gameboard receives attacks', () => {
     expect(() => {
       gameboard.receiveAttack([3, 5])
     }).toThrow("Duplicate attack");
+  });
+});
+
+describe('Gameboard displays ship sunk data', () => {
+  test('Gameboard shows not all ships sunk', () => {
+    gameboard.placeShip([3, 5], 3, true);
+    gameboard.placeShip([7, 2], 3, false);
+
+    gameboard.receiveAttack([3, 5]);
+    gameboard.receiveAttack([4, 5]);
+    gameboard.receiveAttack([5, 5]);
+
+    gameboard.receiveAttack([7, 2]);
+    gameboard.receiveAttack([7, 3]);
+
+    expect(gameboard.allSunk).toBe(false);
+  });
+
+  test('Gameboard shows all ships sunk', () => {
+    gameboard.placeShip([3, 5], 3, true);
+    gameboard.placeShip([7, 2], 3, false);
+
+    gameboard.receiveAttack([3, 5]);
+    gameboard.receiveAttack([4, 5]);
+    gameboard.receiveAttack([5, 5]);
+
+    gameboard.receiveAttack([7, 2]);
+    gameboard.receiveAttack([7, 3]);
+    gameboard.receiveAttack([7, 4]);
+
+    expect(gameboard.allSunk).toBe(true);
   });
 });

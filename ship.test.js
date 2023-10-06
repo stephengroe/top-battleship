@@ -3,7 +3,7 @@ import Ship from './ship';
 let ship;
 
 beforeEach(() => {
-  ship = new Ship(3);
+  ship = new Ship('12345', 3);
 });
 
 test('ship class creates an object', () => {
