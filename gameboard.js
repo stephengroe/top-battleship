@@ -86,6 +86,10 @@ export default class Gameboard {
 
     return [hit, sunk];
   }
+
+  get allSunk() {
+    return this.ships.every(ship => ship.isSunk);
+  }
 }
 
 class Cell {
