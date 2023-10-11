@@ -3,9 +3,9 @@ import Gameboard from "./gameboard";
 export default class Player {
   constructor() {
     this.gameboard = new Gameboard(10);
-    this.previousMoves = [];
     this.opponent = null;
     this.myTurn = false;
+    this.previousMoves = new Set();
   }
 
   setOpponent(opponent) {
@@ -25,5 +25,20 @@ export default class Player {
     } else {
       throw new Error("Not my turn!");
     }
+  }
+
+  generateAiMove() {
+    // Generate unique move
+    let randomCoords;
+    do {
+      let randomX = Math.floor(Math.random() * this.gameboard.dimensions);
+      let randomY = Math.floor(Math.random() * this.gameboard.dimensions);
+      randomCoords = [randomX, randomY];
+    } while (this.previousMoves.has(randomCoords.toString()));
+
+    // Store unique move
+    this.previousMoves.add(randomCoords.toString());
+
+    return this.attackOpponent(randomCoords);
   }
 }
