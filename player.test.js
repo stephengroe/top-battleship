@@ -54,11 +54,20 @@ describe("Prevent illegal moves", () => {
       playerOne.attackOpponent([2, -5]);
     }).toThrow("Out of bounds");
   });
-
-  test.todo("Disallow moves off the board (vertical)");
-  test.todo("Disallow duplicate moves");
 });
 
 describe("Game engine AI", () => {
-  test.todo("Game engine selects random moves");
+  test("Game engine selects random moves", () => {
+    expect(playerOne.generateAiMove()).toEqual([false, false]);
+  });
+
+  test("Engine never guesses duplicate moves", () => {
+    expect(() => {
+      // Loop through an entire game of moves
+      for (let i=0; i<100; i+=1) {
+        playerOne.generateAiMove();
+        playerTwo.generateAiMove();
+      }
+    }).not.toThrow();
+  });
 });
