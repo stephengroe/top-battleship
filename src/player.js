@@ -1,11 +1,11 @@
 import Gameboard from "./gameboard";
 
 export default class Player {
-  constructor() {
+  constructor(myTurn = false) {
     this.name = `Player #${Math.round(Math.random() * 1000)}`;
     this.gameboard = new Gameboard(10);
     this.opponent = null;
-    this.myTurn = false;
+    this.myTurn = myTurn;
     this.previousMoves = new Set();
   }
 

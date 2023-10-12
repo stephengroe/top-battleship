@@ -20,6 +20,7 @@ function renderStartPage() {
   newGameButton.textContent = "New Game";
   newGameButton.addEventListener("click", (event) => {
     game = new Game();
+    game.generateRandomShips([5, 4, 3, 3, 2]);
     renderGame();
   });
 
@@ -66,6 +67,7 @@ function renderPlayerBoard(player) {
 
       if (cellReference.hasShip) {
         cellElement.classList.add("has-ship");
+        cellElement.dataset.ship = cellReference.shipId;
       }
   
       board.append(cellElement);
