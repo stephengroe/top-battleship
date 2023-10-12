@@ -56,7 +56,7 @@ function renderPlayerBoard(player) {
   block.setAttribute("class", "block");
 
   const playerName = document.createElement("h2");
-  playerName.textContent = player.name || "New Player";
+  playerName.textContent = player.name;
 
   const board = document.createElement("div");
   board.setAttribute("class", "gameboard");
