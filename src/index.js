@@ -18,22 +18,72 @@ function renderStartPage() {
   newGameButton.textContent = "New Game";
   newGameButton.addEventListener("click", (event) => {
     initializeGame();
-    console.log("clicked");
+    renderGame();
   });
 
   block.append(heading, newGameButton);
-  body.append(block);
+  wrapper.append(block);
+  body.append(wrapper);
 }
 
+// Create new game
 function initializeGame() {
-  const playerOne = new Player();
-  const playerTwo = new Player();
-  playerOne.setOpponent(playerTwo);
-  playerTwo.setOpponent(playerOne);
-  playerOne.myTurn = true;
+  gameData.playerOne = new Player();
+  gameData.playerTwo = new Player();
+  gameData.playerOne.setOpponent(gameData.playerTwo);
+  gameData.playerTwo.setOpponent(gameData.playerOne);
+  gameData.playerOne.myTurn = true;
 }
 
+// Render game display
+function renderGame() {
+  // Empty wrapper
+  const wrapper = document.querySelector("#wrapper");
+  
+  while (wrapper.firstChild) {
+    wrapper.removeChild(wrapper.firstChild);
+  }
+
+  const playerOneBoard = renderPlayerBoard(gameData.playerOne);
+  const playerTwoBoard = renderPlayerBoard(gameData.playerTwo);
+
+  wrapper.append(playerOneBoard, playerTwoBoard);
+}
+
+// Render player board
+function renderPlayerBoard(player) {
+  const block = document.createElement("div");
+  block.setAttribute("class", "block");
+
+  const playerName = document.createElement("h2");
+  playerName.textContent = player.name || "New Player";
+
+  const board = document.createElement("div");
+  board.setAttribute("class", "gameboard");
+
+  const dimensions = player.gameboard.dimensions;
+
+  for (let i=0; i<dimensions; i+=1) {
+    for (let j=0; j<dimensions; j+=1) {
+      const cellReference = player.gameboard.board[i][j];
+
+      const cellElement = document.createElement("div");
+      cellElement.setAttribute("class", "cell");
+      cellElement.dataset.coordinates = `${i},${j}`;
+
+      if (cellReference.hasShip) {
+        cellElement.classList.add("has-ship");
+      }
+  
+      board.append(cellElement);
+    }
+  }
+
+  block.append(playerName, board);
+  return block;
+}
 
 
 // Starting functions
+const gameData = {};
 renderStartPage();
