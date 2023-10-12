@@ -80,8 +80,15 @@ ul.details {
 .attacked::before {
   content: '•';
   color: var(--red);
+  font-size: 2rem;
+  opacity: 0.75;
 }
 
-.has-ship.attacked {
+.has-ship.attacked::before {
   background-color: var(--red);
+  display: block;
+  height: 100%;
+  content: '';
+  opacity: 0.75;
+  border-radius: 3px
 }

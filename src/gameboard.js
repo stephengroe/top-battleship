@@ -122,11 +122,15 @@ export default class Gameboard {
   }
 
   renderAttack(coordinates) {
-    const domCell = document.querySelector(`#${this.elementId} [data-coordinates=${coordinates.toString()}]`);
+    const domCell = document.querySelector(`#${this.elementId} [data-coordinates='${coordinates.toString()}']`);
     domCell.classList.add("attacked");
 
     const ships = document.querySelector(`#${this.elementId} li.ships`);
-    ships.textContent = `Remaining ships: ${this.ships.length}`;
+    ships.textContent = `Remaining ships: ${this.remainingShips}`;
+  }
+
+  get remainingShips() {
+    return this.ships.filter(ship => !ship.isSunk).length;
   }
 
   get allSunk() {

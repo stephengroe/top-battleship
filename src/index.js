@@ -71,6 +71,10 @@ function renderPlayerBoard(player) {
         cellElement.classList.add("has-ship");
         cellElement.dataset.ship = cellReference.shipId;
       }
+
+      cellElement.addEventListener("click", (e) => {
+        player.attackOpponent([i, j]);
+      });
   
       board.append(cellElement);
     }
