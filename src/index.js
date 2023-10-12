@@ -89,10 +89,12 @@ function renderPlayerBoard(player) {
   details.setAttribute("class", "details");
 
   const ships = document.createElement("li");
-  ships.textContent = `Remaining ships: ...`;
+  ships.setAttribute("class", "ships");
+  ships.textContent = `Remaining ships: ${player.gameboard.ships.length}`;
 
   const moves = document.createElement("li");
-  moves.textContent = `Total moves: ...`;
+  moves.setAttribute("class", "moves");
+  moves.textContent = `Total moves: ${player.previousMoves.size}`;
 
   details.append(ships, moves);
 
