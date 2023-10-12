@@ -25,13 +25,14 @@ export default class Gameboard {
 
     return board;
   }
+  
 
   placeShip([x, y], shipLength, horizontal) {
     // Check if out of bounds
     if ((horizontal && x + shipLength > this.dimensions)
       || (!horizontal && y + shipLength > this.dimensions)) {
-      throw new Error("Out of bounds");
-    }
+        return false;
+      }
 
     const id = this.board.length += 1;
 
@@ -39,7 +40,7 @@ export default class Gameboard {
     if (horizontal) {
       for (let i=x; i<(x + shipLength); i += 1){
         if (this.board[i][y].hasShip === true) { // Test for overlap
-          throw new Error("Overlapping ships");
+          return false
         } else {
           this.board[i][y].hasShip = true;
           this.board[i][y].shipId = id;
@@ -48,7 +49,7 @@ export default class Gameboard {
     } else { // Place vertical ship
       for (let i=y; i<(y + shipLength); i += 1){
         if (this.board[x][i].hasShip === true) { // Test for overlap
-          throw new Error("Overlapping ships");
+          return false
         } else {
           this.board[x][i].hasShip = true;
           this.board[x][i].shipId = id;
@@ -58,6 +59,7 @@ export default class Gameboard {
 
     // Add ship objects
     this.ships.push(new Ship(id, shipLength));
+    return true;
   }
 
   receiveAttack([x, y]) {

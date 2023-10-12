@@ -52,28 +52,27 @@ describe('Gameboard places ships', () => {
   });
   
   test('Gameboard disallows horizontal ships out of bounds', () => {
-    expect(() => {
-      gameboard.placeShip([9, 2], 3, true);
-    }).toThrow("Out of bounds");
+    expect(gameboard.placeShip([9, 2], 3, true)).toBe(false);
   });
   
   test('Gameboard disallows vertical ships out of bounds', () => {
-    expect(() => {
-      gameboard.placeShip([2, 9], 3, false);
-    }).toThrow("Out of bounds");
+    expect(gameboard.placeShip([2, 9], 3, false)).toBe(false);
   });
 
   test('Gameboard disallows overlapping ships', () => {
     gameboard.placeShip([4, 6], 3, true);
-    expect(() => {
-      gameboard.placeShip([5, 5], 3, false);
-    }).toThrow("Overlapping ships");
+    expect(gameboard.placeShip([5, 5], 3, false)).toBe(false);
   });
 
   test('Gameboard adds ship objects', () => {
     gameboard.placeShip([2, 5], 3, true);
     gameboard.placeShip([6, 3], 2, false);
     expect(gameboard.ships).toHaveLength(2);
+  });
+
+  test('Generates valid ships', () => {
+    gameboard.generateShips([5, 4, 3, 3, 2]);
+    expect(gameboard.ships).toHaveLength(5);
   });
 });
 

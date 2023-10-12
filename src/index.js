@@ -94,7 +94,6 @@ function renderPlayerBoard(player) {
   return block;
 }
 
-
 // Starting functions
 const gameData = {};
 renderStartPage();
