@@ -20,7 +20,8 @@ function renderStartPage() {
   newGameButton.textContent = "New Game";
   newGameButton.addEventListener("click", (event) => {
     game = new Game();
-    game.generateRandomShips([5, 4, 3, 3, 2]);
+    game.playerOne.gameboard.generateShips([5, 4, 3, 3, 2]);
+    game.playerTwo.gameboard.generateShips([5, 4, 3, 3, 2]);
     renderGame();
   });
 
@@ -48,6 +49,7 @@ function renderGame() {
 function renderPlayerBoard(player) {
   const block = document.createElement("div");
   block.setAttribute("class", "block");
+  block.setAttribute("id", player.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase());
 
   const playerName = document.createElement("h2");
   playerName.textContent = player.name;
@@ -81,11 +83,7 @@ function renderPlayerBoard(player) {
   ships.setAttribute("class", "ships");
   ships.textContent = `Remaining ships: ${player.gameboard.ships.length}`;
 
-  const moves = document.createElement("li");
-  moves.setAttribute("class", "moves");
-  moves.textContent = `Total moves: ${player.previousMoves.size}`;
-
-  details.append(ships, moves);
+  details.append(ships);
 
   block.append(playerName, board, details);
   return block;

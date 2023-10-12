@@ -3,10 +3,14 @@ import Gameboard from "./gameboard";
 export default class Player {
   constructor(myTurn = false) {
     this.name = `Player #${Math.round(Math.random() * 1000)}`;
-    this.gameboard = new Gameboard(10);
+
+    const nameId = this.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+    this.gameboard = new Gameboard(10, nameId);
     this.opponent = null;
     this.myTurn = myTurn;
     this.previousMoves = new Set();
+    this.isComputer;
   }
 
   setOpponent(opponent) {
@@ -15,6 +19,7 @@ export default class Player {
 
   attackOpponent([x, y]) {
     if (this.myTurn === true) {
+
       // Validate coordinates are in bounds
       const max = this.gameboard.dimensions;
       if (x < 0 || x >= max || y < 0 || y >= max) {

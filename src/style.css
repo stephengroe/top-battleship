@@ -76,3 +76,12 @@ ul.details {
   list-style-type: none;
   font-size: 1.25rem;
 }
+
+.attacked::before {
+  content: '•';
+  color: var(--red);
+}
+
+.has-ship.attacked {
+  background-color: var(--red);
+}

@@ -1,10 +1,11 @@
 import Ship from "./ship";
 
 export default class Gameboard {
-  constructor(dimensions) {
+  constructor(dimensions, elementId) {
     this.dimensions = dimensions;
     this.board = this.generateBoard(dimensions);
     this.ships = [];
+    this.elementId = elementId;
   }
 
   generateBoard(dimensions) {
@@ -116,7 +117,16 @@ export default class Gameboard {
       }
     }
 
+    this.renderAttack([x, y]);
     return [hit, sunk];
+  }
+
+  renderAttack(coordinates) {
+    const domCell = document.querySelector(`#${this.elementId} [data-coordinates=${coordinates.toString()}]`);
+    domCell.classList.add("attacked");
+
+    const ships = document.querySelector(`#${this.elementId} li.ships`);
+    ships.textContent = `Remaining ships: ${this.ships.length}`;
   }
 
   get allSunk() {
