@@ -1,5 +1,7 @@
 import "./style.css";
-import Player from "./player";
+import Game from "./game";
+
+let game;
 
 function renderStartPage() {
   const body = document.querySelector("body");
@@ -17,28 +19,13 @@ function renderStartPage() {
   newGameButton.setAttribute("id", "new-game-button");
   newGameButton.textContent = "New Game";
   newGameButton.addEventListener("click", (event) => {
-    initializeGame();
+    game = new Game();
     renderGame();
   });
 
   block.append(heading, newGameButton);
   wrapper.append(block);
   body.append(wrapper);
-}
-
-// Create new game
-function initializeGame() {
-  gameData.playerOne = new Player();
-  gameData.playerTwo = new Player();
-  gameData.playerOne.setOpponent(gameData.playerTwo);
-  gameData.playerTwo.setOpponent(gameData.playerOne);
-
-  gameData.playerOne.gameboard.generateShips([5, 4, 3, 3, 2]);
-  gameData.playerTwo.gameboard.generateShips([5, 4, 3, 3, 2]);
-
-  console.log(gameData.playerOne.gameboard);
-
-  gameData.playerOne.myTurn = true;
 }
 
 // Render game display
@@ -50,8 +37,8 @@ function renderGame() {
     wrapper.removeChild(wrapper.firstChild);
   }
 
-  const playerOneBoard = renderPlayerBoard(gameData.playerOne);
-  const playerTwoBoard = renderPlayerBoard(gameData.playerTwo);
+  const playerOneBoard = renderPlayerBoard(game.playerOne);
+  const playerTwoBoard = renderPlayerBoard(game.playerTwo);
 
   wrapper.append(playerOneBoard, playerTwoBoard);
 }
@@ -103,5 +90,4 @@ function renderPlayerBoard(player) {
 }
 
 // Starting functions
-const gameData = {};
 renderStartPage();
