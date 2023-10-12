@@ -11,13 +11,8 @@
 body {
   background-color: var(--light-blue);
   color: var(--dark-blue);
-}
-
-h1,
-h2,
-h3 {
- font-family: 'Anton', sans-serif;
- text-transform: uppercase;
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
 }
 
 h1 {
@@ -55,19 +50,29 @@ button {
 
   display: grid;
   grid-template: repeat(10, 1fr) / repeat(10, 1fr);
-  gap: 1px;
+  gap: 2px;
+
+  width: 40vw;
+  height: 40vw;
+  box-sizing: border-box;
 }
 
 .cell {
-  width: 5vmin;
-  height: 5vmin;
   background-color: white;
+  border-radius: 2px;
 }
 
-.cell.active:hover {
+.cell:hover {
   background-color: #ddd;
 }
 
 .cell.has-ship {
   background-color: var(--light-blue);
+}
+
+ul.details {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  font-size: 1.25rem;
 }

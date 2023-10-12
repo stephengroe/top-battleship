@@ -79,7 +79,18 @@ function renderPlayerBoard(player) {
     }
   }
 
-  block.append(playerName, board);
+  const details = document.createElement("ul");
+  details.setAttribute("class", "details");
+
+  const ships = document.createElement("li");
+  ships.textContent = `Remaining ships: ...`;
+
+  const moves = document.createElement("li");
+  moves.textContent = `Total moves: ...`;
+
+  details.append(ships, moves);
+
+  block.append(playerName, board, details);
   return block;
 }
 
