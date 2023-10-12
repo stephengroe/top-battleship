@@ -32,6 +32,12 @@ function initializeGame() {
   gameData.playerTwo = new Player();
   gameData.playerOne.setOpponent(gameData.playerTwo);
   gameData.playerTwo.setOpponent(gameData.playerOne);
+
+  gameData.playerOne.gameboard.generateShips([5, 4, 3, 3, 2]);
+  gameData.playerTwo.gameboard.generateShips([5, 4, 3, 3, 2]);
+
+  console.log(gameData.playerOne.gameboard);
+
   gameData.playerOne.myTurn = true;
 }
 

@@ -22,10 +22,29 @@ export default class Gameboard {
 
       board.push(column);
     }
-
     return board;
   }
   
+  generateShips(shipList) {
+    for (let i=0; i<shipList.length; i++) {
+      let randCoordinates;
+      let randRotate;
+      let placementResult;
+
+      // Generate random ships
+      do {
+        randCoordinates = [
+          Math.floor(Math.random() * this.dimensions),
+          Math.floor(Math.random() * this.dimensions),
+        ];
+        randRotate = Boolean(Math.round(Math.random()));
+
+        placementResult = this.placeShip(randCoordinates, shipList[i], randRotate);
+
+        // If they generate errors, regenerate
+      } while (placementResult === false);
+    }
+  }
 
   placeShip([x, y], shipLength, horizontal) {
     // Check if out of bounds
@@ -34,7 +53,7 @@ export default class Gameboard {
         return false;
       }
 
-    const id = this.board.length += 1;
+    const id = Math.floor(Math.random() * 100000);
 
     // Place horizontal ship
     if (horizontal) {
