@@ -23,6 +23,7 @@ function renderStartPage() {
     game.playerOne.gameboard.generateShips([5, 4, 3, 3, 2]);
     game.playerTwo.gameboard.generateShips([5, 4, 3, 3, 2]);
     renderGame();
+    game.playGame();
   });
 
   block.append(heading, newGameButton);

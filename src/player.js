@@ -14,15 +14,19 @@ export default class Player {
   }
 
   attackOpponent([x, y]) {
-    if (this.myTurn === true) throw new Error("Not my turn!");
+    if (this.myTurn === false) throw new Error("Not my turn!");
 
     // Validate coordinates are in bounds
     const max = this.gameboard.dimensions;
     if (x < 0 || x >= max || y < 0 || y >= max) throw new Error("Out of bounds");
 
+    const result = this.gameboard.receiveAttack([x, y]);
     this.myTurn = false;
     this.opponent.myTurn = true;
-    const result =  this.gameboard.receiveAttack([x, y]);
+
+    if (this.opponent.isComputer === true) {
+      this.opponent.generateAiMove();
+    }
     return result;
   }
 
