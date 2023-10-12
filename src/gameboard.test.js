@@ -52,16 +52,16 @@ describe('Gameboard places ships', () => {
   });
   
   test('Gameboard disallows horizontal ships out of bounds', () => {
-    expect(gameboard.placeShip([9, 2], 3, true)).toBe(false);
+    expect(gameboard.isValidPlacement([9, 2], 3, true)).toBe(false);
   });
   
   test('Gameboard disallows vertical ships out of bounds', () => {
-    expect(gameboard.placeShip([2, 9], 3, false)).toBe(false);
+    expect(gameboard.isValidPlacement([2, 9], 3, false)).toBe(false);
   });
 
   test('Gameboard disallows overlapping ships', () => {
     gameboard.placeShip([4, 6], 3, true);
-    expect(gameboard.placeShip([5, 5], 3, false)).toBe(false);
+    expect(gameboard.isValidPlacement([5, 5], 3, false)).toBe(false);
   });
 
   test('Gameboard adds ship objects', () => {

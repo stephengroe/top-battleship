@@ -39,46 +39,57 @@ export default class Gameboard {
         ];
         randRotate = Boolean(Math.round(Math.random()));
 
-        placementResult = this.placeShip(randCoordinates, shipList[i], randRotate);
+        placementResult = this.isValidPlacement(randCoordinates, shipList[i], randRotate);
 
         // If they generate errors, regenerate
       } while (placementResult === false);
+      this.placeShip(randCoordinates, shipList[i], randRotate);
     }
   }
 
-  placeShip([x, y], shipLength, horizontal) {
-    // Check if out of bounds
-    if ((horizontal && x + shipLength > this.dimensions)
-      || (!horizontal && y + shipLength > this.dimensions)) {
-        return false;
+  isValidPlacement([x, y], shipLength, horizontal) {
+    if (horizontal) { // Validate horizontal ship
+      // Test if out of bounds
+      if (x + shipLength > this.dimensions) return false;
+
+      // Test for overlap with existing ship
+      for (let i=x; i<(x + shipLength); i += 1){
+        if (this.board[i][y].hasShip === true) return false
       }
+  } else { // Validate vertical ship
+      // Test if out of bounds
+      if ((y + shipLength) > this.dimensions) return false; // Out of bounds
+
+      // Test for overlap with existing ship
+      for (let i=y; i<(y + shipLength); i += 1){
+        if (this.board[x][i].hasShip === true) return false
+      }
+    }
+    return true;
+  }
+
+  placeShip([x, y], shipLength, horizontal) {
+    if (this.isValidPlacement([x, y], shipLength, horizontal) === false) {
+      return;
+    } 
 
     const id = Math.floor(Math.random() * 100000);
 
     // Place horizontal ship
     if (horizontal) {
       for (let i=x; i<(x + shipLength); i += 1){
-        if (this.board[i][y].hasShip === true) { // Test for overlap
-          return false
-        } else {
-          this.board[i][y].hasShip = true;
-          this.board[i][y].shipId = id;
-        }
+        this.board[i][y].hasShip = true;
+        this.board[i][y].shipId = id;
       }
     } else { // Place vertical ship
       for (let i=y; i<(y + shipLength); i += 1){
-        if (this.board[x][i].hasShip === true) { // Test for overlap
-          return false
-        } else {
-          this.board[x][i].hasShip = true;
-          this.board[x][i].shipId = id;
-        }
+        this.board[x][i].hasShip = true;
+        this.board[x][i].shipId = id;
       }
     }
 
     // Add ship objects
     this.ships.push(new Ship(id, shipLength));
-    return true;
   }
 
   receiveAttack([x, y]) {
