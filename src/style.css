@@ -96,17 +96,19 @@ ul.details {
   height: 100%;
   content: '';
   opacity: 0.75;
-  border-radius: 3px
+  border-radius: 2px;
 }
 
-.sunk::before {
+.has-ship.attacked.sunk::before {
   animation: 500ms sunk;
+  background-color: var(--purple);
 }
 
 @keyframes sunk {
   0% {
     transform: scale(0.1);
     border-radius: 100%;
+    background-color: var(--red);
   }
 
   50% {
@@ -117,5 +119,6 @@ ul.details {
   100% {
     transform: scale(1);
     border-radius: none;
+    background-color: var(--purple);
   }
 }
