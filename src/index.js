@@ -54,7 +54,7 @@ function renderModal() {
   modal.setAttribute("id", "game-over-modal");
 
   const gameOver = document.createElement("h2");
-  gameOver.textContent = "Game Over";
+  gameOver.textContent = "Game Over!";
 
   const winnerText = document.createElement("h3");
   winnerText.setAttribute("id", "winner-text");
