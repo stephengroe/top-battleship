@@ -47,7 +47,12 @@ export default class Game {
 
   announceGameOver(winner, loser) {
     setTimeout(() => {
-      alert(`Game over! ${winner.name} won, ${loser.name} lost, with ${loser.gameboard.remainingShips} remaining ships.`);
-    }, 1500);
+      const modal = document.querySelector("#game-over-modal");
+
+      const winnerText = document.querySelector("#winner-text");  
+      winnerText.textContent = `${winner.name} won in ${winner.totalMoves} moves with ${winner.gameboard.remainingShips} remaining ships.`;
+
+      modal.showModal();
+    }, 500);
   }
 }

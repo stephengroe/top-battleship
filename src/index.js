@@ -43,7 +43,37 @@ function renderGame() {
   const playerOneBoard = renderPlayerBoard(game.playerOne);
   const playerTwoBoard = renderPlayerBoard(game.playerTwo);
 
-  wrapper.append(playerOneBoard, playerTwoBoard);
+  const modal = renderModal();
+  
+  wrapper.append(playerOneBoard, playerTwoBoard, modal);
+}
+
+// Render (hidden) modal to display when game finishes
+function renderModal() {
+  const modal = document.createElement("dialog");
+  modal.setAttribute("id", "game-over-modal");
+
+  const gameOver = document.createElement("h2");
+  gameOver.textContent = "Game Over";
+
+  const winnerText = document.createElement("h3");
+  winnerText.setAttribute("id", "winner-text");
+  
+  const newGameButton = document.createElement("button");
+  newGameButton.setAttribute("id", "new-game-button");
+  newGameButton.textContent = "New Game";
+  newGameButton.addEventListener("click", (event) => {
+    const modal = document.querySelector("#game-over-modal");
+    game = new Game();
+    game.playerOne.gameboard.generateShips([5, 4, 3, 3, 2]);
+    game.playerTwo.gameboard.generateShips([5, 4, 3, 3, 2]);
+    game.playGame();
+    renderGame();
+  });
+
+  modal.append(gameOver, winnerText, newGameButton);
+
+  return modal;
 }
 
 // Render player board

@@ -39,4 +39,10 @@ export default class Player {
 
     return this.attackOpponent(randomCoords);
   }
+
+  get totalMoves() {
+    const cells = this.opponent.gameboard.board.flat();
+    cells.filter(cell => cell.beenAttacked === true);
+    return cells.length;
+  }
 }

@@ -122,3 +122,10 @@ ul.details {
     background-color: var(--purple);
   }
 }
+
+#game-over-modal {
+  padding: 2em;
+  background-color: var(--light-blue);
+  border: 5px solid var(--dark-blue);
+  text-align: center;
+}
