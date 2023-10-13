@@ -41,8 +41,8 @@ export default class Player {
   }
 
   get totalMoves() {
-    const cells = this.opponent.gameboard.board.flat();
-    cells.filter(cell => cell.beenAttacked === true);
+    let cells = this.opponent.gameboard.board.flat();
+    cells = cells.filter(cell => cell.beenAttacked === true);
     return cells.length;
   }
 }
