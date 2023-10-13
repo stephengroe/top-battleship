@@ -2,7 +2,7 @@ import Gameboard from "./gameboard";
 
 export default class Player {
   constructor(name, myTurn = false) {
-    this.name = name || `Player #${Math.round(Math.random() * 1000)}`;
+    this.name = name;
 
     const nameId = this.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 
