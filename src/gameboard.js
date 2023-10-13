@@ -98,6 +98,7 @@ export default class Gameboard {
     const attackedCell = this.board[x][y];
     let hit = false;
     let sunk = false;
+    let hitShip = {};
 
     // If already attacked, reject
     if (attackedCell.beenAttacked) {
@@ -109,7 +110,7 @@ export default class Gameboard {
     // If ship, flag a hit
     if (attackedCell.hasShip) {
       hit = true;
-      const hitShip = this.ships.find(ship => ship.id === attackedCell.shipId);
+      hitShip = this.ships.find(ship => ship.id === attackedCell.shipId);
       hitShip.hit();
 
       if (hitShip.isSunk === true) {
@@ -117,13 +118,30 @@ export default class Gameboard {
       }
     }
 
-    this.renderAttack([x, y]);
+    this.renderAttack([x, y], hit, sunk, hitShip);
     return [hit, sunk];
   }
 
-  renderAttack(coordinates) {
+  renderAttack(coordinates, hit, sunk, ship) {
     const domCell = document.querySelector(`#${this.elementId} [data-coordinates='${coordinates.toString()}']`);
     domCell.classList.add("attacked");
+    
+    if (hit) {
+      domCell.classList.add("has-ship");
+      domCell.dataset.ship = ship.id;
+    } 
+
+    // Add cascading explosion animation when ship is sunk
+    if (sunk) {
+      const shipCells = document.querySelectorAll(`[data-ship='${ship.id}']`);
+      let delay = 0;
+      shipCells.forEach(cell => {
+        setTimeout(() => {
+          cell.classList.add("sunk");
+        }, delay);
+        delay += 200;
+      });
+    }
 
     const ships = document.querySelector(`#${this.elementId} li.ships`);
     ships.textContent = `Remaining ships: ${this.remainingShips}`;
