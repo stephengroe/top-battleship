@@ -20,7 +20,7 @@ export default class Player {
     const max = this.gameboard.dimensions;
     if (x < 0 || x >= max || y < 0 || y >= max) throw new Error("Out of bounds");
 
-    const result = this.gameboard.receiveAttack([x, y]);
+    const result = this.opponent.gameboard.receiveAttack([x, y]);
     this.myTurn = false;
     this.opponent.myTurn = true;
 

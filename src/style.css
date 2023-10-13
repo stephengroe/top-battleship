@@ -60,9 +60,15 @@ button {
 .cell {
   background-color: white;
   border-radius: 2px;
+  cursor: crosshair;
 }
 
-.cell:hover {
+#computer .cell {
+  background-color: #bbb;
+}
+
+.cell:hover,
+#computer .cell:hover {
   background-color: #ddd;
 }
 

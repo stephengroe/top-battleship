@@ -68,15 +68,18 @@ function renderPlayerBoard(player) {
       cellElement.setAttribute("class", "cell");
       cellElement.dataset.coordinates = `${i},${j}`;
 
-      if (cellReference.hasShip) {
-        cellElement.classList.add("has-ship");
-        cellElement.dataset.ship = cellReference.shipId;
+      if (player.isComputer === false) {
+        if (cellReference.hasShip) {
+          cellElement.classList.add("has-ship");
+          cellElement.dataset.ship = cellReference.shipId;
+        }
       }
 
-      cellElement.addEventListener("click", (e) => {
-        player.attackOpponent([i, j]);
-      });
-  
+      if (player.isComputer === true) {
+        cellElement.addEventListener("click", (e) => {
+          player.opponent.attackOpponent([i, j]);
+        });
+      }
       board.append(cellElement);
     }
   }
